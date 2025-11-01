@@ -1,1 +1,5 @@
 @import "tailwindcss";
+@theme{
+    --color-app-background-color:white;
+    --color-app-nav-background-color:#0D1117;
+}
