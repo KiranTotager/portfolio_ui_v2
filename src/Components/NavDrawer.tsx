@@ -5,10 +5,8 @@ import {
   Drawer,
   For,
   HStack,
-  Kbd,
   Portal,
   Text,
-  VStack
 } from "@chakra-ui/react"
 import type React from "react"
 import { RiMenuFoldLine } from "react-icons/ri";

@@ -1,4 +1,4 @@
-import { Box, Button, Center, HStack, Image, Text, VStack } from "@chakra-ui/react";
+import { Box,  HStack, VStack } from "@chakra-ui/react";
 import bg from "../assets/potfolioBg(1).svg"
 import AnimatedContent from "@/Components/bits/SlideUpAnimation";
 import SplitText from "../Components/bits/SplitText";
