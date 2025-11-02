@@ -7,6 +7,7 @@ import {
   HStack,
   Portal,
   Text,
+  VStack,
 } from "@chakra-ui/react"
 import type React from "react"
 import { RiMenuFoldLine } from "react-icons/ri";
@@ -17,7 +18,7 @@ type NavItems = {
   icon: React.ReactNode;
   label: String;
   onClick: () => void;
-  icon2:String;
+  icon2: String;
 }
 type NavProps = {
   items: NavItems[];
@@ -48,26 +49,26 @@ const NavDrawer: React.FC<NavProps> = ({ items }) => {
                   </Box>
                   <Drawer.Body className="bg-drawer-background-color">
                     <div className="p-10 h-10">
-                      
+
                     </div>
                     {items.map((value, key) => {
-                        console.log(value.onClick);
-                        console.log(value.icon2)
-                        return (
+                      return (
+                        <Drawer.ActionTrigger asChild>
                           <HStack onClick={value.onClick} key={key} cursor="pointer" mb="6">
-                            
-                            <Text fontSize={20} style={{fontFamily:'Permanent Marker,cursive'}}>
-                            {value.icon2}&nbsp;&nbsp;&nbsp;
+
+                            <Text fontSize={20} style={{ fontFamily: 'Permanent Marker,cursive' }}>
+                              {value.icon2}&nbsp;&nbsp;&nbsp;
                               <AnimatedGradientText >
-                              {value.label}
-                            </AnimatedGradientText>
+                                {value.label}
+                              </AnimatedGradientText>
                             </Text>
                           </HStack>
-                        )
-                      })}
+                        </Drawer.ActionTrigger>
+                      )
+                    })}
                   </Drawer.Body>
                   <Drawer.Footer bg="#2F3A4E">
-                    <HStack justifyContent="space-between" w="100%">
+                    <VStack justifyContent="center" alignItems="center" w="100%">
                       <HStack>
                         made with ❤️
                       </HStack>
@@ -75,7 +76,9 @@ const NavDrawer: React.FC<NavProps> = ({ items }) => {
                         <LiaCopyrightSolid />
                         <Text>2025 Kiran Totager.All rights reserved.</Text>
                       </HStack>
-                    </HStack>
+
+                    </VStack>
+
                   </Drawer.Footer>
                   <Drawer.CloseTrigger asChild>
                     <CloseButton size="sm" />
