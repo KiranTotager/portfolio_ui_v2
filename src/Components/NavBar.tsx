@@ -32,6 +32,7 @@ export default function NavBar() {
             // inset={0}
             alignItems='center'
             shadow="sm"
+            zIndex={1}
 
         >
             {/* Logo on the left */}

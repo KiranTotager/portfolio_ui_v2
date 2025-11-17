@@ -9,7 +9,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
     return (
         <Container
             w="100vw"
-            h="100vh"
+            h="auto"
             maxH='none'
             maxW='none'
             

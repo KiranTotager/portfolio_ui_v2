@@ -1,9 +1,14 @@
-import { HStack } from "@chakra-ui/react";
-
-export default function Footer(){
+import { HStack, Text } from "@chakra-ui/react";
+import { FaInstagram } from "react-icons/fa";
+export default function Footer() {
     return (
-        <HStack>
-            
-        </HStack>
+        <div className="">
+            <div>
+                <FaInstagram/>
+            </div>
+            <div>
+
+            </div>
+        </div>
     )
 }
