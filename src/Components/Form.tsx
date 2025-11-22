@@ -1,57 +1,92 @@
-import { ShineBorder } from "../../src/Components/ui/shine-border"
+import { useCreateContactMutation } from "@/Services/ContactService";
+import { ContactFormShcema, type ContactFormData } from "@/types/ContactFormType";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form"
+import { Spinner } from "@chakra-ui/react"
+import { toast } from "react-toastify";
+
 export default function Form() {
+    const { register, handleSubmit, formState: { errors, isValid, isDirty }, reset } = useForm<ContactFormData>({ mode: "onBlur", resolver: zodResolver(ContactFormShcema) });
+    const [createContact, { isLoading }] = useCreateContactMutation();
+    const onSubmit = async (data: ContactFormData) => {
+        try {
+            await createContact(data).unwrap();
+            reset();
+        } catch (err) {
+            toast.error("something went wrong please try again after some time...");    
+        }
+    }
+
     return (
-        <div>
-            <ShineBorder shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} />
-            <div className="grid md:grid-cols-2 gap-4">
-                <label className="block">
-                    <span className="text-sm text-gray-300">Full name</span>
-                    <input
-                        name="name"
-                        placeholder="Your name"
-                        className="mt-1 block w-full rounded-lg border border-gray-700 bg-[#11131a] px-3 py-2 placeholder-gray-500 focus:outline-none"
-                    />
-                </label>
+        <div className="bg-gray-900! p-10! lg:p-16!">
+            <h2 className="text-2xl! md:text-3xl! font-bold! text-white! mb-8!">Send a Message</h2>
+            <form className="space-y-6!" onSubmit={handleSubmit(onSubmit)}>
+                <div>
+                    <label className="block! text-sm! font-medium! text-gray-300! mb-2!">Your Name</label>
+                    <input type="text" placeholder="ram"
+                        className="w-full! px-4! py-3! bg-gray-800! border! border-gray-700!
+              rounded-lg! text-white! placeholder-gray-500!
+              focus:ring-2! focus:ring-indigo-500! focus:border-transparent!
+              transition! duration-200!"
+                        {...register("Name")}
+                        required />
+                    {errors.Name && (<span className="text-red-500">please enter name</span>)}
+                </div>
+                <div>
+                    <label className="block! text-sm! font-medium! text-gray-300! mb-2!">Email Address</label>
+                    <input type="email" placeholder="ram@gmail.com"
+                        className="w-full! px-4! py-3! bg-gray-800! border! border-gray-700!
+              rounded-lg! text-white! placeholder-gray-500!
+              focus:ring-2! focus:ring-indigo-500! focus:border-transparent!
+              transition! duration-200!"
+                        {...register("Email")}
+                        required />
+                    {errors.Email && (<span className="text-red-500">{errors.Email.message}</span>)}
 
-                <label className="block">
-                    <span className="text-sm text-gray-300">Email</span>
-                    <input
-                        name="email"
-                        placeholder="you@example.com"
-                        className="mt-1 block w-full rounded-lg border border-gray-700 bg-[#11131a] px-3 py-2 placeholder-gray-500 focus:outline-none"
-                    />
-                </label>
-            </div>
+                </div>
+                <div>
+                    <label className="block! text-sm! font-medium! text-gray-300! mb-2!">Phone</label>
+                    <input type="text" placeholder="+91 90199 83058"
+                        className="w-full! px-4! py-3! bg-gray-800! border! border-gray-700!
+              rounded-lg! text-white! placeholder-gray-500!
+              focus:ring-2! focus:ring-indigo-500! focus:border-transparent!
+              transition! duration-200!"
+                        {...register("Phone")}
+                        required />
+                    {errors.Phone && (<span className="text-red-500">{errors.Phone.message}</span>)}
+                </div>
 
-            <label className="block">
-                <span className="text-sm text-gray-300">Subject</span>
-                <input
-                    name="subject"
-                    placeholder="Project, collaboration or quick hello"
-                    className="mt-1 block w-full rounded-lg border border-gray-700 bg-[#11131a] px-3 py-2 placeholder-gray-500 focus:outline-none"
-                />
-            </label>
+                <div>
+                    <label className="block! text-sm! font-medium! text-gray-300! mb-2!">Message</label>
+                    <textarea rows={5} placeholder="Tell me about your project..."
+                        className="w-full! px-4! py-3! bg-gray-800! border! border-gray-700!
+              rounded-lg! text-white! placeholder-gray-500! resize-none!
+              focus:ring-2! focus:ring-indigo-500! focus:border-transparent!
+              transition! duration-200!"
+                        {...register("Message")}
+                        required></textarea>
+                    {errors.Message && (<span className="text-red-500">{errors.Message.message}</span>)}
+                </div>
 
-            <label className="block">
-                <span className="text-sm text-gray-300">Message</span>
-                <textarea
-                    name="message"
-                    rows={6}
-                    placeholder="Tell me about your project or say hi 👋"
-                    className="mt-1 block w-full rounded-lg border border-gray-700 bg-[#11131a] px-3 py-3 placeholder-gray-500 focus:outline-none"
-                />
-            </label>
+                <button type="submit"
+                    disabled={!isDirty || !isValid}
+                    className={`w-full! bg-linear-to-r! from-indigo-600! to-purple-600!
+                    hover:from-indigo-700! hover:to-purple-700!
+                    text-white! font-semibold! py-4! rounded-lg!
+                    transition! duration-200! transform! hover:scale-[1.02]!
+                    focus:ring-2! focus:ring-offset-2! focus:ring-indigo-500!
+                    focus:ring-offset-gray-900! ${(!isDirty || !isValid) || isLoading ? "cursor-not-allowed opacity-10" : ""}`}>
+                    {isLoading ? <Spinner size="sm" /> : "send contact message"}
+                </button>
 
-            <div className="flex items-center gap-3">
-                <input type="checkbox" id="subscribe" className="h-4 w-4 rounded-md bg-white/3" />
-                <label htmlFor="subscribe" className="text-sm text-gray-300">Send occasional updates about my work</label>
-            </div>
+            </form>
 
-            <button type="button" className="w-full py-3 rounded-lg font-semibold text-black bg-gradient-to-r from-cyan-400 to-blue-500 hover:opacity-95 transition">
-                Send Message
-            </button>
+            <p className="text-center! text-sm! text-gray-500! mt-6!">
+                Your information will remain confidential.
+            </p>
 
-            <p className="text-center text-sm text-gray-500">Or email me directly at <a href="mailto:kiran.totager@example.com" className="text-cyan-300">kiran.totager@example.com</a></p>
         </div>
+
+
     )
 }
