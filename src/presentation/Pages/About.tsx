@@ -1,6 +1,6 @@
 import { Center, Image } from "@chakra-ui/react";
-import comingSoon from "../assets/comingSoon.png"
-export default function HireMe() {
+import comingSoon from "../../assets/comingSoon.png"
+export default function About() {
     return (
         <Center w="100vw" h="100vh" bg="black">
             <Image

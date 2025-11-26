@@ -1,17 +1,30 @@
-import { Box,  HStack, VStack } from "@chakra-ui/react";
-import bg from "../assets/potfolioBg(1).svg"
-import AnimatedContent from "@/Components/bits/SlideUpAnimation";
+import { Box, HStack, VStack } from "@chakra-ui/react";
+import bg from "../../assets/potfolioBg(1).svg"
+import AnimatedContent from "@/presentation/Components/bits/SlideUpAnimation";
 import SplitText from "../Components/bits/SplitText";
-import BlurText from "@/Components/BlurText";
-import TextType from "@/Components/TextType";
-import { InteractiveHoverButton } from "@/Components/ui/interactive-hover-button";
+import BlurText from "@/presentation/Components/BlurText";
+import TextType from "@/presentation/Components/TextType";
+import { InteractiveHoverButton } from "@/presentation/Components/ui/interactive-hover-button";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react"
+import { useTheme } from "next-themes"
+import { Particles } from "@/presentation/Components/ui/particles";
+import { useGetHeroSectionDataQuery } from "@/Services/HeroService";
+
+
 export default function Home() {
+    const { resolvedTheme } = useTheme()
+    const [color, setColor] = useState("#0420b0")
+    const {data,isLoading,isSuccess}=useGetHeroSectionDataQuery();
+    console.log("api data for the hero section is",data)
+    useEffect(() => {
+        setColor(resolvedTheme === "dark" ? "#0420b0" : "#000000")
+    }, [resolvedTheme])
     // console.log("inside the home page");
     let nameText = "Hello, i'm kiran 🤟!";
     let line2Text = "I ❤️ Building,digital products,brands and experiance...!";
     let line3Text = "As a Software Developer Trainee at NextWebi IT Solutions Pvt. Ltd.,and I specialize in building powerful backend solutions,and designing responsive web experiences, and developing mobile and desktop applications that deliver impact.!";
-    let reactNavigator=useNavigate();
+    let reactNavigator = useNavigate();
     return (
         <>
             <Box
@@ -31,7 +44,7 @@ export default function Home() {
                 overflow='scroll'
             >
                 {/* <Text>hello</Text> */}
-                <HStack p={{ base: 10, md: 0 }} w={{base:"100%",md:"10/12"}} h='10/12' maxW='none'>
+                <HStack p={{ base: 10, md: 0 }} w={{ base: "100%", md: "10/12" }} h='10/12' maxW='none'>
                     <VStack w="100%" spaceY={0}>
                         <SplitText
                             text={nameText}
@@ -43,7 +56,7 @@ export default function Home() {
                             from={{ opacity: 0, y: 40 }}
                             to={{ opacity: 1, y: 0 }}
                             threshold={0.1}
-                            rootMargin="-100px"
+                            // rootMargin="-100px"
                             textAlign="center"
                         />
                         <AnimatedContent
@@ -60,12 +73,12 @@ export default function Home() {
                         >
                             <Box className="text-center">
                                 <BlurText
-                                text={line2Text}
-                                delay={150}
-                                animateBy="words"
-                                direction="top"
-                                className="text-2xl mb-8"
-                            />
+                                    text={line2Text}
+                                    delay={150}
+                                    animateBy="words"
+                                    direction="top"
+                                    className="text-xl mb-8 text-center"
+                                />
                             </Box>
 
                         </AnimatedContent>
@@ -109,7 +122,7 @@ export default function Home() {
                             {/* <Text>
                                 view more
                             </Text> */}
-                            <InteractiveHoverButton onClick={()=>{reactNavigator("/about")}}>
+                            <InteractiveHoverButton onClick={() => { reactNavigator("/about") }}>
                                 view more
                             </InteractiveHoverButton>
                         </AnimatedContent>
@@ -118,6 +131,16 @@ export default function Home() {
                 <VStack>
                 </VStack>
             </Box>
+            <Particles
+                className="absolute inset-0 z-0"
+                quantity={100}
+                ease={150}
+                color={color}
+                refresh
+                size={3}
+                vx={0}
+                vy={0}
+            />
         </>
     )
 }
