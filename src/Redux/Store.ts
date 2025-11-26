@@ -1,10 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-import {contactApi} from "../Services/ContactService"
 import { setupListeners } from "@reduxjs/toolkit/query";
-export const store=configureStore({
-    reducer:{
-        [contactApi.reducerPath]:contactApi.reducer
+import { api } from "@/Services/createApi";
+export const store = configureStore({
+    reducer: {
+        [api.reducerPath]: api.reducer,//this configuration for storing states globally
     },
-    middleware:(getDefualtMiddleware)=>getDefualtMiddleware().concat(contactApi.middleware)
+    middleware:(getDefaultMiddleware)=>getDefaultMiddleware().concat(api.middleware),
+    
 })
-setupListeners(store.dispatch)
+setupListeners(store.dispatch); // this for handling automatic refetch when the tab gain refocus and comes online after going offline

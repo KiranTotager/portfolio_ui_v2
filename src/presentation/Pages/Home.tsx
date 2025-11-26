@@ -1,24 +1,25 @@
 import { Box, HStack, VStack } from "@chakra-ui/react";
-import bg from "../assets/potfolioBg(1).svg"
-import AnimatedContent from "@/Components/bits/SlideUpAnimation";
+import bg from "../../assets/potfolioBg(1).svg"
+import AnimatedContent from "@/presentation/Components/bits/SlideUpAnimation";
 import SplitText from "../Components/bits/SplitText";
-import BlurText from "@/Components/BlurText";
-import TextType from "@/Components/TextType";
-import { InteractiveHoverButton } from "@/Components/ui/interactive-hover-button";
+import BlurText from "@/presentation/Components/BlurText";
+import TextType from "@/presentation/Components/TextType";
+import { InteractiveHoverButton } from "@/presentation/Components/ui/interactive-hover-button";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react"
 import { useTheme } from "next-themes"
-import { Particles } from "@/Components/ui/particles";
-
+import { Particles } from "@/presentation/Components/ui/particles";
+import { useGetHeroSectionDataQuery } from "@/Services/HeroService";
 
 
 export default function Home() {
     const { resolvedTheme } = useTheme()
     const [color, setColor] = useState("#0420b0")
+    const {data,isLoading,isSuccess}=useGetHeroSectionDataQuery();
+    console.log("api data for the hero section is",data)
     useEffect(() => {
         setColor(resolvedTheme === "dark" ? "#0420b0" : "#000000")
     }, [resolvedTheme])
-
     // console.log("inside the home page");
     let nameText = "Hello, i'm kiran 🤟!";
     let line2Text = "I ❤️ Building,digital products,brands and experiance...!";

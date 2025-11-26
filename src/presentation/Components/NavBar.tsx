@@ -1,5 +1,5 @@
 import { Box, HStack, Image } from "@chakra-ui/react";
-import logo from "../assets/portfoliologo.png"
+import logo from "../../assets/portfoliologo.png"
 import { VscHome, VscFolderLibrary, VscTools, VscAccount } from "react-icons/vsc";
 import { MdWorkOutline } from "react-icons/md";
 import { HiOutlineMail } from "react-icons/hi";
@@ -22,7 +22,7 @@ export default function NavBar() {
     return (
 
         <HStack
-            w='100vw'
+            w='100%'
             pt={{ base: 6, md: 10 }}
             px={{ base: 6, md: 10 }}
             pb={2}

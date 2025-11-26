@@ -1,17 +1,17 @@
 import { lazy, Suspense } from 'react'
-import { Provider } from "@/Components/ui/provider.tsx"
+import { Provider } from "@/presentation/Components/ui/provider"
 
 
 import './App.css'
 import { Route, Routes } from 'react-router-dom'
-import SpinnerComponent from './Components/SpinnerComponent'
-import MainLayout from './Layouts/MainLayout'
-const HomePage = lazy(() => import("./Pages/Home"))
-const About = lazy(() => import("./Pages/About"))
-const Projects = lazy(() => import("./Pages/Projects"))
-const Skills = lazy(() => import("./Pages/Skills"))
-const ContactMe = lazy(() => import("./Pages/ContactMe"))
-const HireMe = lazy(() => import("./Pages/HireMe"))
+import SpinnerComponent from './presentation/Components/SpinnerComponent'
+import MainLayout from './presentation/Layouts/MainLayout'
+const HomePage = lazy(() => import("./presentation/Pages/Home"))
+const About = lazy(() => import("./presentation/Pages/About"))
+const Projects = lazy(() => import("./presentation/Pages/Projects"))
+const Skills = lazy(() => import("./presentation/Pages/Skills"))
+const ContactMe = lazy(() => import("./presentation/Pages/ContactMe"))
+const HireMe = lazy(() => import("./presentation/Pages/HireMe"))
 function App() {
 
   return (

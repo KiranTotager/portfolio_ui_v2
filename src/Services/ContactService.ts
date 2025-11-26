@@ -1,21 +1,18 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-export const contactApi = createApi({
-    baseQuery: fetchBaseQuery({ baseUrl: "" }),
-    endpoints: (builder) => (
-        {
-            createContact: builder.mutation({
-                query: (contact) => (
-                    {
-                        url: "/contact-me",
-                        method: "POST",
-                        body: contact,
-                        headers: {
-
-                        },
-                    }
-                ),
+import { api } from "./createApi";
+export const contactApi = api.injectEndpoints({
+    endpoints: (build) => ({
+        createContactUs: (build).mutation({
+            query: (body) => ({
+                url: "",
+                method: "post",
+                data: body,
             }),
-        }
-    )
+        }),
+        getContactUs: (build).query({
+            query: () => ({
+                url:"",
+                method:"get",
+            })
+        })
+    })
 })
-export const { useCreateContactMutation } = contactApi;

@@ -1,5 +1,5 @@
-import Footer from "@/Components/Footer";
-import NavBar from "@/Components/NavBar";
+import Footer from "@/presentation/Components/Footer";
+import NavBar from "@/presentation/Components/NavBar";
 import { Container, VStack } from "@chakra-ui/react";
 import {ToastContainer} from "react-toastify"
 interface MainLayoutProps {
@@ -8,7 +8,7 @@ interface MainLayoutProps {
 export default function MainLayout({ children }: MainLayoutProps) {
     return (
         <Container
-            w="100vw"
+            w="100% "
             h="auto"
             maxH='none'
             maxW='none'
