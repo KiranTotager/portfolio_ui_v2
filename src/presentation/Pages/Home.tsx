@@ -16,7 +16,7 @@ import SpinnerComponent from "../Components/SpinnerComponent";
 export default function Home() {
     const { resolvedTheme } = useTheme()
     const [color, setColor] = useState("#0420b0")
-    const { data, isLoading, isSuccess } = useGetHeroSectionDataQuery();
+    const { data, isLoading } = useGetHeroSectionDataQuery();
     // console.log("hello messsage from api is", data)
     useEffect(() => {
         setColor(resolvedTheme === "dark" ? "#0420b0" : "#000000")

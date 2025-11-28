@@ -8,7 +8,7 @@ import { useEffect } from "react";
 
 export default function Form() {
     const { register, handleSubmit, formState: { errors, isValid, isDirty }, reset } = useForm<ContactFormData>({ mode: "all", resolver: zodResolver(ContactFormShcema) });
-    const [createContact, { isLoading, isSuccess, isError, error }] = useCreateContactUsMutation();
+    const [createContact, { isLoading, isSuccess, error }] = useCreateContactUsMutation();
     const onSubmit = async (data: ContactFormData) => {
         try {
             await createContact(data).unwrap();
