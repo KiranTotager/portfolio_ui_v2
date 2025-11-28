@@ -1,22 +1,28 @@
-import { useCreateContactMutation } from "@/Services/ContactService";
+import { useCreateContactUsMutation } from "@/Services/ContactService";
 import { ContactFormShcema, type ContactFormData } from "@/types/ContactFormType";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form"
 import { Spinner } from "@chakra-ui/react"
 import { toast } from "react-toastify";
+import { useEffect } from "react";
 
 export default function Form() {
-    const { register, handleSubmit, formState: { errors, isValid, isDirty }, reset } = useForm<ContactFormData>({ mode: "onBlur", resolver: zodResolver(ContactFormShcema) });
-    const [createContact, { isLoading }] = useCreateContactMutation();
+    const { register, handleSubmit, formState: { errors, isValid, isDirty }, reset } = useForm<ContactFormData>({ mode: "all", resolver: zodResolver(ContactFormShcema) });
+    const [createContact, { isLoading, isSuccess, isError, error }] = useCreateContactUsMutation();
     const onSubmit = async (data: ContactFormData) => {
         try {
             await createContact(data).unwrap();
-            reset();
+
         } catch (err) {
-            toast.error("something went wrong please try again after some time...");    
+            toast.error("something went wrong please try again after some time..." + error);
         }
     }
-
+    useEffect(() => {
+        if (isSuccess) {
+            toast.success("contact request submitted successfully..");
+            reset();
+        }
+    }, [isSuccess])
     return (
         <div className="bg-gray-900! p-10! lg:p-16!">
             <h2 className="text-2xl! md:text-3xl! font-bold! text-white! mb-8!">Send a Message</h2>
@@ -28,9 +34,9 @@ export default function Form() {
               rounded-lg! text-white! placeholder-gray-500!
               focus:ring-2! focus:ring-indigo-500! focus:border-transparent!
               transition! duration-200!"
-                        {...register("Name")}
+                        {...register("name")}
                         required />
-                    {errors.Name && (<span className="text-red-500">please enter name</span>)}
+                    {errors.name && (<span className="text-red-500">please enter name</span>)}
                 </div>
                 <div>
                     <label className="block! text-sm! font-medium! text-gray-300! mb-2!">Email Address</label>
@@ -39,21 +45,21 @@ export default function Form() {
               rounded-lg! text-white! placeholder-gray-500!
               focus:ring-2! focus:ring-indigo-500! focus:border-transparent!
               transition! duration-200!"
-                        {...register("Email")}
+                        {...register("email")}
                         required />
-                    {errors.Email && (<span className="text-red-500">{errors.Email.message}</span>)}
+                    {errors.email && (<span className="text-red-500">{errors.email.message}</span>)}
 
                 </div>
                 <div>
                     <label className="block! text-sm! font-medium! text-gray-300! mb-2!">Phone</label>
-                    <input type="text" placeholder="+91 90199 83058"
+                    <input type="text" placeholder="90199 83058"
                         className="w-full! px-4! py-3! bg-gray-800! border! border-gray-700!
               rounded-lg! text-white! placeholder-gray-500!
               focus:ring-2! focus:ring-indigo-500! focus:border-transparent!
               transition! duration-200!"
-                        {...register("Phone")}
+                        {...register("phoneNumber")}
                         required />
-                    {errors.Phone && (<span className="text-red-500">{errors.Phone.message}</span>)}
+                    {errors.phoneNumber && (<span className="text-red-500">{errors.phoneNumber.message}</span>)}
                 </div>
 
                 <div>
@@ -63,9 +69,9 @@ export default function Form() {
               rounded-lg! text-white! placeholder-gray-500! resize-none!
               focus:ring-2! focus:ring-indigo-500! focus:border-transparent!
               transition! duration-200!"
-                        {...register("Message")}
+                        {...register("message")}
                         required></textarea>
-                    {errors.Message && (<span className="text-red-500">{errors.Message.message}</span>)}
+                    {errors.message && (<span className="text-red-500">{errors.message.message}</span>)}
                 </div>
 
                 <button type="submit"

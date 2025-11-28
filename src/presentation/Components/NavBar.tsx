@@ -22,7 +22,7 @@ export default function NavBar() {
     return (
 
         <HStack
-            w='100%'
+            w='100vw'
             pt={{ base: 6, md: 10 }}
             px={{ base: 6, md: 10 }}
             pb={2}

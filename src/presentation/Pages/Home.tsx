@@ -10,20 +10,24 @@ import { useEffect, useState } from "react"
 import { useTheme } from "next-themes"
 import { Particles } from "@/presentation/Components/ui/particles";
 import { useGetHeroSectionDataQuery } from "@/Services/HeroService";
+import SpinnerComponent from "../Components/SpinnerComponent";
 
 
 export default function Home() {
     const { resolvedTheme } = useTheme()
     const [color, setColor] = useState("#0420b0")
-    const {data,isLoading,isSuccess}=useGetHeroSectionDataQuery();
-    console.log("api data for the hero section is",data)
+    const { data, isLoading, isSuccess } = useGetHeroSectionDataQuery();
+    // console.log("hello messsage from api is", data)
     useEffect(() => {
         setColor(resolvedTheme === "dark" ? "#0420b0" : "#000000")
     }, [resolvedTheme])
     // console.log("inside the home page");
-    let nameText = "Hello, i'm kiran 🤟!";
-    let line2Text = "I ❤️ Building,digital products,brands and experiance...!";
-    let line3Text = "As a Software Developer Trainee at NextWebi IT Solutions Pvt. Ltd.,and I specialize in building powerful backend solutions,and designing responsive web experiences, and developing mobile and desktop applications that deliver impact.!";
+    // let nameText = "Hello, i'm kiran 🤟!";
+    let nameText = data?.helloMessage;
+    // let line2Text = "I ❤️ Building,digital products,brands and experiance...!";
+    let line2Text = data?.passionMessage;
+    let line3Text = data?.shortDescription;
+    // let line3Text = "As a Software Developer Trainee at NextWebi IT Solutions Pvt. Ltd.,and I specialize in building powerful backend solutions,and designing responsive web experiences, and developing mobile and desktop applications that deliver impact.!";
     let reactNavigator = useNavigate();
     return (
         <>
@@ -45,7 +49,7 @@ export default function Home() {
             >
                 {/* <Text>hello</Text> */}
                 <HStack p={{ base: 10, md: 0 }} w={{ base: "100%", md: "10/12" }} h='10/12' maxW='none'>
-                    <VStack w="100%" spaceY={0}>
+                    {isLoading?<SpinnerComponent/> :<VStack w="100%" spaceY={0}>
                         <SplitText
                             text={nameText}
                             className="text-7xl font-semibold text-center"
@@ -126,7 +130,7 @@ export default function Home() {
                                 view more
                             </InteractiveHoverButton>
                         </AnimatedContent>
-                    </VStack>
+                    </VStack>}
                 </HStack>
                 <VStack>
                 </VStack>

@@ -3,7 +3,7 @@ export const contactApi = api.injectEndpoints({
     endpoints: (build) => ({
         createContactUs: (build).mutation({
             query: (body) => ({
-                url: "",
+                url: "contact-me",
                 method: "post",
                 data: body,
             }),
@@ -16,3 +16,4 @@ export const contactApi = api.injectEndpoints({
         })
     })
 })
+export const {useCreateContactUsMutation}=contactApi;
